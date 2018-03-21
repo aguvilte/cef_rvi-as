@@ -68,9 +68,16 @@
         $sql = $con->prepare('SELECT id_catedra, nombre FROM catedras WHERE id_profesor = :id_profesor');
         $sql->execute(array(':id_profesor' => $id_profesor));
 
-        echo '<div class="form-group" action="acta_regularidad.php" method="post">';
+				if(isset($_POST['form-submit'])) {
+					if($_POST['form-submit'] == 'Ir al acta') {
+						$id_catedra_elegida = $_POST['select-materia'];
+						echo $id_catedra_elegida;
+					}
+				}
+
+        echo '<div class="form-group" id="form-materias"><form action="" method="post">';
         echo '<label>Seleccione la materia en la que quieres cargar actas de regularidad:</label>';
-        echo '<select class="form-control" name="formMateria" id="formMateria" onchange="this.form.submit()">';
+        echo '<select class="form-control" name="select-materia">';
 
         while($datos = $sql->fetch(PDO::FETCH_ASSOC)){
           echo '<option value="'.$datos['id_catedra'].'">'.$datos['nombre'].'</option>';
@@ -81,15 +88,46 @@
       }
 
       echo '</select>';
-      echo '</div>';
+			// echo '<button class="btn btn-outline-primary" id="submit-form-materias" onclick="acta('.$_POST['form-materias'].')"><a href="./acta_regularidad.php">Ir al acta</a></button>';
+			echo '<a href="#"><input class="btn btn-outline-primary" type="submit" name="form-submit" value="Ir al acta"></input></a>';
+			echo '<button onclick="acta()">hola</button>';
+      echo '</form></div>';
     }
-    ?>
 
-    <button class="btn btn-outline-primary" onclick=""><a href="./acta_regularidad.php">Ir al acta</a></button>
+		?>
+
+    <!-- <button class="btn btn-outline-primary" id="submit-form-materias"><a href="./acta_regularidad.php">Ir al acta</a></button> -->
   </div>
 
 	<script type="text/javascript">
-	  function acta(id_catedra) {
+
+
+	// alert(id_catedra)
+
+	// var form = document.getElementById("form-materias");
+	//
+	// document.getElementById("submit-form-materias").addEventListener("click", acta()
+
+	function acta() {
+		// var id_catedra = "<?php echo $id_catedra_elegida?>"
+		alert('ta saliendo');
+
+		var parametros = {
+			'id_catedra': id_catedra
+		}
+
+		var url = 'acta_regularidad.php'
+
+		$.ajax({
+			type: 'GET',
+			url: url,
+			data: parametros,
+			success: function(data) {
+				alert(data)
+			}
+		})
+	}
+	  // function acta(id_catedra) {
 	  // function acta() {
 	  	// if(confirm("Esta seguro que desea inscribirse?")){
       //
@@ -108,9 +146,9 @@
 	    //     alert(data);
 	    //     }
 	    //   });
-      alert(id_catedra)
+      // alert(id_catedra)
       // alert('hey')
-	    }
+	    // }
 	  // }
 	</script>
 	<script type="text/javascript"></script>
