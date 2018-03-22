@@ -43,108 +43,99 @@
     <br>
     <br>
 
-    <table class="table" style="background-color:white;">
-      <thead class="thead-dark">
-        <tr>
-          <th scope="col">N°</th>
-          <th scope="col">APELLIDO Y NOMBRE</th>
-          <th scope="col">DNI</th>
-          <!-- <th scope="col">FORMATO</th>
-          <th scope="col">REGIMEN</th> -->
-          <th scope="col">NOTA</th>
-          <th scope="col">CONDICIÓN</th>
-        </tr>
-      </thead>
-      <tbody>
+		<div class="col-md-2" style="margin-bottom: 20px; padding: 0;">
+			<a href="./materias_profesor.php"><button type="button" class="btn btn-outline-primary">Elegir otra materia</button></a>
+		</div>
 
-      <?php
-      session_start();
-      $server = "localhost";
-      $usuario = "root";
-      $contra = "MyNewPass";
-      $basedato = "profesorado_cef";
+		<form id="tabla-alumnos" action="guardar_nota_condicion_alumno_a_catedra.php" method="get">
+			<table class="table" style="background-color:white;">
+				<thead class="thead-dark">
+					<tr>
+						<th scope="col">N°</th>
+						<th scope="col">APELLIDO Y NOMBRE</th>
+						<th scope="col">DNI</th>
+						<th scope="col">NOTA</th>
+						<th scope="col">CONDICIÓN</th>
+					</tr>
+				</thead>
+				<tbody>
 
-			// echo $_POST['id_materia'];
-			// echo $_POST['hola'];
+					<?php
+					session_start();
+					$server = "localhost";
+					$usuario = "root";
+					$contra = "MyNewPass";
+					$basedato = "profesorado_cef";
 
-			$id_materia_elegida = $_SESSION['id_materia_elegida'];
+					$id_materia_elegida = $_SESSION['id_materia_elegida'];
 
-      if(isset($_SESSION['dni'])) {
-        try {
-          $con = new PDO('mysql:host='.$server.';dbname='.$basedato.'', "$usuario", "$contra");
-          $con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+					if(isset($_SESSION['dni'])) {
+						try {
+							$con = new PDO('mysql:host='.$server.';dbname='.$basedato.'', "$usuario", "$contra");
+							$con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-          $sql = $con->prepare('SELECT nombre_y_apellido, dni FROM alumnos INNER JOIN alumnos_catedras ON alumnos.id_alumnos = alumnos_catedras.id_alumno WHERE alumnos_catedras.id_materia = '.$id_materia_elegida.' ORDER BY nombre_y_apellido');
-          $sql->execute();
+							$sql = $con->prepare('SELECT nombre_y_apellido, dni FROM alumnos INNER JOIN alumnos_catedras ON alumnos.id_alumnos = alumnos_catedras.id_alumno WHERE alumnos_catedras.id_materia = '.$id_materia_elegida.' ORDER BY nombre_y_apellido');
+							$sql->execute();
 
-					$cadena = "";
-					$cadena.="<tr>";
-					// $cadena.="</tr>";
-					// $cadena.="<td>holis</td></tr>";
+							$cadena = "";
+							$cadena.="<tr>";
+							// $cadena.="</tr>";
+							// $cadena.="<td>holis</td></tr>";
 
-					// echo 'lpm';
+							// echo 'lpm';
 
-					$i = 0;
+							$i = 0;
 
-          while($datos = $sql->fetch(PDO::FETCH_ASSOC)){
-            $nombre_alumno = $datos['nombre_y_apellido'];
-						$dni = $datos['dni'];
-						$i = $i+1;
+							while($datos = $sql->fetch(PDO::FETCH_ASSOC)){
+								$nombre_alumno = $datos['nombre_y_apellido'];
+								$dni = $datos['dni'];
+								$i = $i+1;
 
-            $cadena.="<td>$i</td>
-					 		<td>".$nombre_alumno."</td>
-            	<td>".$dni."</td>
-          		<td><input class='form-control' type='text' size='1'></input></td>
-             	<td>
-								<select class='form-control'>
-									<option value='regular'>REGULAR</option>
-									<option value='promocion_indirecta'>P. INDIRECTA</option>
-									<option value='promocion_directa'>P. DIRECTA</option>
-									<option value='libre'>LIBRE</option>
-								</select>
-							</td>";
+								$cadena.="<td>$i</td>
+								<td>".$nombre_alumno."</td>
+								<td class='dni'><input type='text' name='dni[]' value='$dni'></input></td>
+								<td><input name='nota[]' class='form-control input-nota' type='text' size='1'></input></td>
+								<td>
+									<select name='condicion[]' class='form-control select-condicion'>
+										<option value=''></option>
+										<option value='R'>REGULAR</option>
+										<option value='PI'>P. INDIRECTA</option>
+										<option value='P'>P. DIRECTA</option>
+										<option value='L'>LIBRE</option>
+									</select>
+								</td>";
 
-            $cadena.="</tr>";
-	          }
-          }
+								$cadena.="</tr>";
+							}
+						}
 
-        catch (PDOException $e) {
-          $mensaje = $e->getMessage();
-        }
+						catch (PDOException $e) {
+							$mensaje = $e->getMessage();
+						}
 
-        $cadena.="</tr>";
-        echo $cadena;
-      }
+						$cadena.="</tr>";
+						echo $cadena;
+					}
 
-      ?>
+					?>
+				</tbody>
+			</table>
 
-      </tbody>
-    </table>
-
-    <button class="btn btn-outline-primary">Cargar notas</button>
-  </div>
+	    <div class="row">
+				<div class="col-md-5 col-sm-4"></div>
+				<div class="col-md-2 col-sm-4" style="margin-top: 15px;">
+					<button class="btn btn-primary" onclick="guardarNotas(<?php echo $i ?>)">Cargar notas</button>
+				</div>
+			</div>
+	  </div>
+	</form>
 
 	<script type="text/javascript">
-	  // function inscribir(id_alumno,id_catedra) {
-	  // 	if(confirm("Esta seguro que desea inscribirse?")){
-    //
-	  //     var parametros = {
-	  //       "id_alumno": id_alumno,
-	  //       "id_catedra": id_catedra
-	  //     };
-    //
-	  //     var url = "guardar_inscripcion_de_alumno_a_la_catedra.php";
-    //
-	  //     $.ajax({
-	  //       type: "GET",
-	  //       url: url,
-	  //       data:parametros ,
-	  //       success: function(data) {
-	  //       alert(data);
-	  //       }
-	  //     });
-	  //   }
-	  // }
+	  $.ajax({
+			type: 'GET',
+			url: 'guardar_nota_condicion_alumno_a_catedra.php',
+			data: $('#tabla-alumnos').serialize(),
+		});
 	</script>
 	<script type="text/javascript"></script>
 </body>

@@ -33,7 +33,7 @@
 	      <a class="nav-item nav-link" href="#">Inscripcion Materias</a>
 	      <a class="nav-item nav-link" href="#">Inscripcion Final</a>
 	      <a class="nav-item nav-link" href="#">Ver plan de estudios</a>
-	      <a class="nav-item nav-link" href="#">Obtener crtificados</a>
+	      <a class="nav-item nav-link" href="#">Obtener certificados</a>
     	</div>
     </div>
 	</nav>
@@ -42,6 +42,7 @@
     <br>
     <br>
     <br>
+		<div class="row justify-content-center">
 
     <?php
     session_start();
@@ -68,7 +69,7 @@
         $sql = $con->prepare('SELECT id_catedra, nombre FROM catedras WHERE id_profesor = :id_profesor');
         $sql->execute(array(':id_profesor' => $id_profesor));
 
-        echo '<div class="form-group" id="form-materias"><form action="" method="get">';
+        echo '<div class="form-group col-md-8 col-sd-12" id="form-materias"><form action="" method="get"><div class="row">';
         echo '<label>Seleccione la materia en la que quieres cargar actas de regularidad:</label>';
         echo '<select class="form-control" id="materias-select" name="select-materia">';
 
@@ -80,21 +81,26 @@
         $mensaje = $e->getMessage();
       }
 
-      echo '</select>';
+      echo '</select><br>';
 			// echo '<button class="btn btn-outline-primary" onclick="getValorIdMateria()"><a href="./acta_regularidad.php">Ir al acta</a></button>';
-			echo '<input type="submit" name="submit" value="Ir al acta" class="btn btn-outline-primary" onclick="redirigir()"></input>';
-      echo '</form></div>';
+			echo '<div class="col-md-5 col-sm-4 col-xs-4"></div>';
+			echo '<div class="col-md-2 col-sm-4 col-xs-4" style="margin-top: 15px;"><input type="submit" name="submit" value="Ir al acta" class="btn btn-outline-primary form-control" onclick="redirigir()"></input></div>';
+      echo '</div></form></div>';
 
 			if(isset($_GET['submit'])) {
 				$_SESSION['id_materia_elegida'] = $_GET['select-materia'];
 				header('Location: ./acta_regularidad.php');
 			}
     }
+		else {
+			header('Location: http://localhost/profesorado/iniciar_sesion.php');
+		}
 
 		?>
 
     <!-- <button class="btn btn-outline-primary" id="submit-form-materias"><a href="./acta_regularidad.php">Ir al acta</a></button> -->
-  </div>
+		</div>
+	</div>
 
 	<script type="text/javascript">
 
