@@ -18,7 +18,7 @@
 	</style>
 </head>
 <body style="background-color:#EDECEA;">
-	<nav style="background-color:#0D0C0C" class="navbar navbar-dark  fixed-top    navbar-toggleable-md ">
+	<nav style="background-color:#0D0C0C" class="navbar navbar-dark fixed-top navbar-toggleable-md">
 		<button class="navbar-toggler navbar-toggler-right " type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" id="btn-menu" aria-label="Toggle navigation">
 	  	<span class="navbar-toggler-icon"></span>
     </button>
@@ -46,7 +46,7 @@
     <table class="table" style="background-color:white;">
       <thead class="thead-dark">
         <tr>
-          <th scope="col">#NRO</th>
+          <th scope="col">N°</th>
           <th scope="col">APELLIDO Y NOMBRE</th>
           <th scope="col">DNI</th>
           <!-- <th scope="col">FORMATO</th>
@@ -64,45 +64,56 @@
       $contra = "MyNewPass";
       $basedato = "profesorado_cef";
 
+			// echo $_POST['id_materia'];
+			// echo $_POST['hola'];
+
+			$id_materia_elegida = $_SESSION['id_materia_elegida'];
+
       if(isset($_SESSION['dni'])) {
         try {
           $con = new PDO('mysql:host='.$server.';dbname='.$basedato.'', "$usuario", "$contra");
           $con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-          $sql = $con->prepare('SELECT id_profesor FROM profesores WHERE dni = '.$_SESSION['dni'].'');
+          $sql = $con->prepare('SELECT nombre_y_apellido, dni FROM alumnos INNER JOIN alumnos_catedras ON alumnos.id_alumnos = alumnos_catedras.id_alumno WHERE alumnos_catedras.id_materia = '.$id_materia_elegida.' ORDER BY nombre_y_apellido');
           $sql->execute();
 
-          if($datos = $sql->fetch(PDO::FETCH_ASSOC)){
-            $id_profesor = $datos['id_profesor'];
-          }
-          else {
-            echo 'no es un profe';
+					$cadena = "";
+					$cadena.="<tr>";
+					// $cadena.="</tr>";
+					// $cadena.="<td>holis</td></tr>";
+
+					// echo 'lpm';
+
+					$i = 0;
+
+          while($datos = $sql->fetch(PDO::FETCH_ASSOC)){
+            $nombre_alumno = $datos['nombre_y_apellido'];
+						$dni = $datos['dni'];
+						$i = $i+1;
+
+            $cadena.="<td>$i</td>
+					 		<td>".$nombre_alumno."</td>
+            	<td>".$dni."</td>
+          		<td><input class='form-control' type='text' size='1'></input></td>
+             	<td>
+								<select class='form-control'>
+									<option value='regular'>REGULAR</option>
+									<option value='promocion_indirecta'>P. INDIRECTA</option>
+									<option value='promocion_directa'>P. DIRECTA</option>
+									<option value='libre'>LIBRE</option>
+								</select>
+							</td>";
+
+            $cadena.="</tr>";
+	          }
           }
 
-          // $sql = $con->prepare('SELECT id_catedra, nombre, ano, formato, regimen_c FROM catedras WHERE id_profesor = :id_profesor');
-          // $sql->execute(array(':id_profesor' => $id_profesor));
-          //
-          // $cadena = "";
-          // $cadena.="<tr>";
-          //
-          // while($datos = $sql->fetch(PDO::FETCH_ASSOC)){
-          //   // echo 'id_catedra: '.$datos['id_catedra'].', ';
-          //   $cadena.="<td>".$datos['id_catedra']."</td>
-          //    <td>".$datos['nombre']."</td>
-          //    <td>".$datos['ano']."</td>
-          //    <td>".$datos['formato']."</td>
-          //    <td>".$datos['regimen_c']."</td>
-          //    <td><input type='text' name='' value=''></td>";
-          //
-          //   $cadena.="</tr>";
-          // }
-
-        } catch (PDOException $e) {
+        catch (PDOException $e) {
           $mensaje = $e->getMessage();
         }
 
-        // $cadena.="</tr>";
-        // echo $cadena;
+        $cadena.="</tr>";
+        echo $cadena;
       }
 
       ?>

@@ -18,7 +18,7 @@
 	</style>
 </head>
 <body style="background-color:#EDECEA;">
-	<nav style="background-color:#0D0C0C" class="navbar navbar-dark fixed-top navbar-toggleable-md ">
+	<nav style="background-color:#0D0C0C" class="navbar navbar-dark fixed-top navbar-toggleable-md">
 		<button class="navbar-toggler navbar-toggler-right " type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" id="btn-menu" aria-label="Toggle navigation">
 	  	<span class="navbar-toggler-icon"></span>
     </button>
@@ -68,16 +68,9 @@
         $sql = $con->prepare('SELECT id_catedra, nombre FROM catedras WHERE id_profesor = :id_profesor');
         $sql->execute(array(':id_profesor' => $id_profesor));
 
-				if(isset($_POST['form-submit'])) {
-					if($_POST['form-submit'] == 'Ir al acta') {
-						$id_catedra_elegida = $_POST['select-materia'];
-						echo $id_catedra_elegida;
-					}
-				}
-
-        echo '<div class="form-group" id="form-materias"><form action="" method="post">';
+        echo '<div class="form-group" id="form-materias"><form action="" method="get">';
         echo '<label>Seleccione la materia en la que quieres cargar actas de regularidad:</label>';
-        echo '<select class="form-control" name="select-materia">';
+        echo '<select class="form-control" id="materias-select" name="select-materia">';
 
         while($datos = $sql->fetch(PDO::FETCH_ASSOC)){
           echo '<option value="'.$datos['id_catedra'].'">'.$datos['nombre'].'</option>';
@@ -88,10 +81,14 @@
       }
 
       echo '</select>';
-			// echo '<button class="btn btn-outline-primary" id="submit-form-materias" onclick="acta('.$_POST['form-materias'].')"><a href="./acta_regularidad.php">Ir al acta</a></button>';
-			echo '<a href="#"><input class="btn btn-outline-primary" type="submit" name="form-submit" value="Ir al acta"></input></a>';
-			echo '<button onclick="acta()">hola</button>';
+			// echo '<button class="btn btn-outline-primary" onclick="getValorIdMateria()"><a href="./acta_regularidad.php">Ir al acta</a></button>';
+			echo '<input type="submit" name="submit" value="Ir al acta" class="btn btn-outline-primary" onclick="redirigir()"></input>';
       echo '</form></div>';
+
+			if(isset($_GET['submit'])) {
+				$_SESSION['id_materia_elegida'] = $_GET['select-materia'];
+				header('Location: ./acta_regularidad.php');
+			}
     }
 
 		?>
@@ -101,55 +98,11 @@
 
 	<script type="text/javascript">
 
-
-	// alert(id_catedra)
-
-	// var form = document.getElementById("form-materias");
-	//
-	// document.getElementById("submit-form-materias").addEventListener("click", acta()
-
-	function acta() {
-		// var id_catedra = "<?php echo $id_catedra_elegida?>"
-		alert('ta saliendo');
-
-		var parametros = {
-			'id_catedra': id_catedra
-		}
-
-		var url = 'acta_regularidad.php'
-
-		$.ajax({
-			type: 'GET',
-			url: url,
-			data: parametros,
-			success: function(data) {
-				alert(data)
-			}
-		})
+	function redirigir() {
+		var id_materia = document.getElementById('materias-select').value;
+		// alert(id_materia);
 	}
-	  // function acta(id_catedra) {
-	  // function acta() {
-	  	// if(confirm("Esta seguro que desea inscribirse?")){
-      //
-	    //   var parametros = {
-	    //     "id_alumno": id_alumno,
-	    //     "id_catedra": id_catedra
-	    //   };
-      //
-	    //   var url = "guardar_inscripcion_de_alumno_a_la_catedra.php";
-      //
-	    //   $.ajax({
-	    //     type: "GET",
-	    //     url: url,
-	    //     data:parametros ,
-	    //     success: function(data) {
-	    //     alert(data);
-	    //     }
-	    //   });
-      // alert(id_catedra)
-      // alert('hey')
-	    // }
-	  // }
+
 	</script>
 	<script type="text/javascript"></script>
 </body>

@@ -113,9 +113,9 @@
 	      $.ajax({
 	        type: "GET",
 	        url: url,
-	        data:parametros ,
+	        data: parametros,
 	        success: function(data) {
-	        alert(data);
+	        	alert(data);
 	        }
 	      });
 	    }
