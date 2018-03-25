@@ -74,38 +74,62 @@
 							$con = new PDO('mysql:host='.$server.';dbname='.$basedato.'', "$usuario", "$contra");
 							$con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-							$sql = $con->prepare('SELECT nombre_y_apellido, dni FROM alumnos INNER JOIN alumnos_catedras ON alumnos.id_alumnos = alumnos_catedras.id_alumno WHERE alumnos_catedras.id_materia = '.$id_materia_elegida.' ORDER BY nombre_y_apellido');
+							$sql = $con->prepare('SELECT nombre_y_apellido, dni, nota, condicion FROM alumnos INNER JOIN alumnos_catedras ON alumnos.id_alumnos = alumnos_catedras.id_alumno WHERE alumnos_catedras.id_materia = '.$id_materia_elegida.' ORDER BY nombre_y_apellido');
 							$sql->execute();
 
 							$cadena = "";
 							$cadena.="<tr>";
-							// $cadena.="</tr>";
-							// $cadena.="<td>holis</td></tr>";
-
-							// echo 'lpm';
 
 							$i = 0;
 
 							while($datos = $sql->fetch(PDO::FETCH_ASSOC)){
 								$nombre_alumno = $datos['nombre_y_apellido'];
 								$dni = $datos['dni'];
+								if($datos['nota'])
+									$nota = $datos['nota'];
+								else
+									$nota = '';
+								if($datos['condicion'])
+									$condicion = $datos['condicion'];
+								else
+									$condicion = '';
+
 								$i = $i+1;
 
 								$cadena.="<td>$i</td>
 								<td>".$nombre_alumno."</td>
 								<td class='dni'><input type='text' name='dni[]' value='$dni'></input></td>
-								<td><input name='nota[]' class='form-control input-nota' type='text' size='1'></input></td>
+								<td><input name='nota[]' class='form-control input-nota' type='text' size='1' value='$nota'></input></td>
 								<td>
-									<select name='condicion[]' class='form-control select-condicion'>
-										<option value=''></option>
-										<option value='R'>REGULAR</option>
-										<option value='PI'>P. INDIRECTA</option>
-										<option value='P'>P. DIRECTA</option>
-										<option value='L'>LIBRE</option>
-									</select>
-								</td>";
+									<select name='condicion[]' class='form-control select-condicion'>";
 
-								$cadena.="</tr>";
+										if($condicion == '')
+											$cadena.="<option value=''></option>";
+
+										if($condicion == 'R')
+											$cadena.="<option value='R' selected>REGULAR</option>";
+										else
+											$cadena.="<option value='R'>REGULAR</option>";
+
+										if($condicion == 'PI')
+											$cadena.="<option value='PI' selected>P. INDIRECTA</option>";
+										else
+											$cadena.="<option value='PI'>P. INDIRECTA</option>";
+
+										if($condicion == 'P')
+											$cadena.="<option value='P' selected>P. DIRECTA</option>";
+										else
+											$cadena.="<option value='P'>P. DIRECTA</option>";
+
+										if($condicion == 'L')
+											$cadena.="<option value='L' selected>LIBRE</option>";
+										else
+											$cadena.="<option value='L'>LIBRE</option>";
+
+									$cadena.="</select>
+									</td>
+
+								</tr>";
 							}
 						}
 

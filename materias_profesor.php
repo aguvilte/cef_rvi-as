@@ -66,7 +66,7 @@
           echo 'no es un profe';
         }
 
-        $sql = $con->prepare('SELECT id_catedra, nombre FROM catedras WHERE id_profesor = :id_profesor');
+        $sql = $con->prepare('SELECT id_catedra, nombre FROM catedras WHERE id_profesor = :id_profesor ORDER BY nombre');
         $sql->execute(array(':id_profesor' => $id_profesor));
 
         echo '<div class="form-group col-md-8 col-sd-12" id="form-materias"><form action="" method="get"><div class="row">';

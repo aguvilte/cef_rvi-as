@@ -135,7 +135,7 @@ if(isset($_SESSION['dni'])) {
             <div class="card-body border border-dark rounded">
               <h5 class="card-title"><b>Cambiar contraseña</b></h5>
               <p class="card-text">Si necesitás cambiar tu contraseña, podés hacerlo haciendo clic acá.</p>
-              <a href="#" class="btn btn-primary">Cambiar contraseña</a>
+              <a href="./cambiar_contrasena.php" class="btn btn-primary">Cambiar contraseña</a>
             </div>
           </div>
         </div>
