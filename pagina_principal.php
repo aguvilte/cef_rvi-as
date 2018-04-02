@@ -48,29 +48,43 @@ if(isset($_SESSION['dni'])) {
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    </head>
+    <style media="screen">
+        #btn-cerrar-sesion:hover {
+          cursor: pointer;
+          background-color: inherit;
+        }
+
+        .absolute-center {
+          padding-top: 25px;
+        }
+    </style>
+  </head>
   <body style="background-color:#EDECEA;">
     <br />
     <div class="container">
       <?php
       echo '<div class="row justify-content-end">';
-      echo '<div class="col-md-7"><h2 align="left">Sistema Informático</h2></div>';
+      // echo '<div class="row">';
+      echo '<div class="col-md-5"><h2 align="center">SIPET - Sistema Informático Para Educación Terciaria</h2></div>';
       if(isset($sesion_nombre)) {
-        echo '<div class="col-sm-8 col-md-3">';
+        echo '<div class="col-sm-6 col-md-3 absolute-center">';
         echo '<p class="p-1 mb-2 bg-secondary text-white border rounded" style="max-width:250px; text-align:center;">';
         echo $sesion_nombre;
         echo '</p></div>';
         // echo '<span class="border border-secondary" style="padding:5px;">'.$sesion_nombre.'</span>';
       }
       if(isset($sesion_perfil)) {
-        echo '<div class="col-sm-4 col-md-2" style="margin:0">';
+        echo '<div class="col-sm-3 col-md-2 absolute-center" style="margin:0">';
         echo '<p class="p-1 mb-2 bg-dark text-white border rounded" style="max-width:250px; text-align:center;">';
         echo $sesion_perfil;
         echo '</p></div>';
       }
+      echo '<div class="col-sm-3 col-md-2 absolute-center" style="margin:0">';
+      echo '<p class="p-1 mb-2 text-black" style="text-align:center; text-decoration:underline; color:dark; margin:0;"><a href="cerrar_sesion.php" id="btn-cerrar-sesion" style:"padding-top:2px;">Cerrar sesión';
+      echo '</a></p></div>';
       echo '</div>';
       ?>
-      <br><br>
+      <br>
       <div class="row justify-content-md-center">
         <div class="col-sm-6 col-md-4 text-center" style="padding:10px;">
           <div class="card">

@@ -87,7 +87,7 @@ catch (PDOException $e) {
                      echo '<label class="text-danger">'.$mensaje.'</label>';
                 }
                 ?>
-                <h3 align="center">¡Bienvenido a Sistema Informático!</h3><br />
+                <h3 align="center">¡Bienvenido a SIPET!</h3><br />
                 <form method="post">
                      <label>Usuario</label>
                      <input type="text" name="dni" class="form-control" />

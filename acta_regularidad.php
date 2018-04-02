@@ -15,6 +15,38 @@
 	  .normal th, .normal td {
 	    border: 1px solid #000;
 	  }*/
+
+		.input-td {
+			margin: 0 auto;
+			text-align: center;
+		}
+
+		#numero-alumno {
+			background-color: inherit;
+			border: none;
+			max-width: 40px;
+		}
+
+		#nombre-alumno {
+			background-color: inherit;
+			border: none;
+			max-width: 350px;
+		}
+
+		#dni-alumno {
+			background-color: inherit;
+			border: none;
+			max-width: 100px;
+		}
+
+		#nota-alumno {
+			max-width: 70px;
+		}
+
+		th {
+			text-align: center;
+		}
+
 	</style>
 </head>
 <body style="background-color:#EDECEA;">
@@ -96,12 +128,12 @@
 
 								$i = $i+1;
 
-								$cadena.="<td>$i</td>
-								<td>".$nombre_alumno."</td>
-								<td class='dni'><input type='text' name='dni[]' value='$dni'></input></td>
-								<td><input name='nota[]' class='form-control input-nota' type='text' size='1' value='$nota'></input></td>
+								$cadena.="<td><input class='form-control input-td' id='numero-alumno' value='$i' readonly></input></td>
+								<td><input class='form-control input-td' id='nombre-alumno' value='$nombre_alumno' readonly></input></td>
+								<td class='dni'><input type='text' name='dni[]' class='form-control input-td' id='dni-alumno' value='$dni' readonly></input></td>
+								<td><input name='nota[]' class='form-control input-nota input-td' id='nota-alumno' type='text' size='1' value='$nota'></input></td>
 								<td>
-									<select name='condicion[]' class='form-control select-condicion'>";
+									<select name='condicion[]' class='form-control select-condicion input-td'>";
 
 										if($condicion == '')
 											$cadena.="<option value=''></option>";

@@ -15,25 +15,31 @@
 	  .normal th, .normal td {
 	    border: 1px solid #000;
 	  }*/
+		@media (max-width: 768px) {
+		  .container {
+		    width: 100%;
+		    max-width: none;
+		  }
+		}
 	</style>
 </head>
 <body style="background-color:#EDECEA;">
-	<nav style="background-color:#0D0C0C" class="navbar navbar-dark  fixed-top    navbar-toggleable-md ">
-		<button class="navbar-toggler navbar-toggler-right " type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" id="btn-menu" aria-label="Toggle navigation">
+	<nav style="background-color:#0D0C0C" class="navbar navbar-dark fixed-top navbar-toggleable-md bg-dark">
+		<button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" id="btn-menu" aria-label="Toggle navigation">
 	  	<span class="navbar-toggler-icon"></span>
     </button>
 
-	  <a class="navbar-brand" href="pagina_principal.php">
-	    <span class="icon-brand35" ></span>
-	    Profesorado CEFN5
+	  <a class="navbar-brand text-white" href="pagina_principal.php">
+	    <span class="icon-brand35"></span>
+	   	SIPET
 	  </a>
 
- 		<div class="collapse  navbar-collapse" id="menu">
+ 		<div class="collapse navbar-collapse" id="menu">
   		<div class="navbar-nav">
-	      <a class="nav-item nav-link" href="#">Inscripcion Materias</a>
-	      <a class="nav-item nav-link" href="#">Inscripcion Final</a>
-	      <a class="nav-item nav-link" href="#">Ver plan de estudios</a>
-	      <a class="nav-item nav-link" href="#">Obtener crtificados</a>
+	      <a class="nav-item nav-link text-white" href="#">Inscripcion Materias</a>
+	      <a class="nav-item nav-link text-white" href="#">Inscripcion Final</a>
+	      <a class="nav-item nav-link text-white" href="#">Ver plan de estudios</a>
+	      <a class="nav-item nav-link text-white" href="#">Obtener crtificados</a>
     	</div>
     </div>
 	</nav>
@@ -42,9 +48,10 @@
 		<br>
 		<br>
 		<br>
+		<br>
 
 		<table class="table" style="background-color:white;">
-	  	<thead class="thead-dark">
+	  	<thead class="bg-primary" style="color:white">
 				<tr>
  					<th scope="col">#NRO</th>
 		      <th scope="col">NOMBRE MATERIA</th>

@@ -42,6 +42,7 @@
     <br>
     <br>
     <br>
+		<br>
 		<div class="row justify-content-center">
 
     <?php
@@ -81,7 +82,7 @@
         $mensaje = $e->getMessage();
       }
 
-      echo '</select><br>';
+      echo '</select><br><br>';
 			// echo '<button class="btn btn-outline-primary" onclick="getValorIdMateria()"><a href="./acta_regularidad.php">Ir al acta</a></button>';
 			echo '<div class="col-md-5 col-sm-4 col-xs-4"></div>';
 			echo '<div class="col-md-2 col-sm-4 col-xs-4" style="margin-top: 15px;"><input type="submit" name="submit" value="Ir al acta" class="btn btn-outline-primary form-control" onclick="redirigir()"></input></div>';
