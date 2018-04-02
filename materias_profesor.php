@@ -67,7 +67,7 @@
           echo 'no es un profe';
         }
 
-        $sql = $con->prepare('SELECT id_catedra, nombre FROM catedras WHERE id_profesor = :id_profesor ORDER BY nombre');
+        $sql = $con->prepare('SELECT id_materia, nombre FROM catedras WHERE id_profesor = :id_profesor ORDER BY nombre');
         $sql->execute(array(':id_profesor' => $id_profesor));
 
         echo '<div class="form-group col-md-8 col-sd-12" id="form-materias"><form action="" method="get"><div class="row">';
@@ -75,7 +75,7 @@
         echo '<select class="form-control" id="materias-select" name="select-materia">';
 
         while($datos = $sql->fetch(PDO::FETCH_ASSOC)){
-          echo '<option value="'.$datos['id_catedra'].'">'.$datos['nombre'].'</option>';
+          echo '<option value="'.$datos['id_materia'].'">'.$datos['nombre'].'</option>';
         }
 
       } catch (PDOException $e) {
